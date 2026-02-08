@@ -18,7 +18,6 @@ export default function RecentTransactionWidget() {
     const incomeExpenseHeaders: TableIncomeExpenseHeaders = {
         id: "ID",
         createdAt: "Date",
-        type: "Type",
         description: "Description",
         accountName: "Account",
         amount: "Amount",

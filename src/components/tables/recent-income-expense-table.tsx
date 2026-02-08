@@ -7,14 +7,12 @@ import {
     TableRow,
 } from "@/components/ui/table"
 
-import { Badge } from "@/components/ui/badge"
 import type { Transaction } from "@/types/transactions"
 import { formatDateTime, formatNumber } from "@/lib/formatters"
 
 export interface TableIncomeExpenseHeaders {
     id: string
     createdAt: string
-    type: string
     description?: string
     accountName?: string
     amount: string
@@ -43,20 +41,6 @@ export function RecentIncomExpenseTable({ headers, items }: TableIncomeExpenseDa
                     <TableRow key={item.id}>
                         <TableCell>{item.id}</TableCell>
                         <TableCell>{formatDateTime(item.createdAt)}</TableCell>
-                        <TableCell>
-                            {item.type === "income" && (
-                                <Badge className="bg-green-100 text-green-700">
-                                    Income
-                                </Badge>
-                            )}
-
-                            {item.type === "expense" && (
-                                <Badge className="bg-red-100 text-red-700">
-                                    Expense
-                                </Badge>
-                            )}
-                        </TableCell>
-
                         <TableCell>{item.description}</TableCell>
                         <TableCell>{item.accountId}</TableCell>
                         <TableCell
