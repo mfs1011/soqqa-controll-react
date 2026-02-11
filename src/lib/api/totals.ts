@@ -1,9 +1,7 @@
 import type { TotalsResponse } from "@/types/totals"
-import { apiFetch } from "./client"
+import apiClient from "./client"
 import type { ItemResponse } from "@/types/api/paginated-response"
 
 export function getTotals(): Promise<ItemResponse<TotalsResponse>> {
-    return apiFetch(
-        `/dashboard/totals`
-    )
+    return apiClient.get(`/dashboard/totals`)
 }

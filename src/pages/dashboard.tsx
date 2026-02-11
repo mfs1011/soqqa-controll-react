@@ -1,5 +1,4 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { IncomeExpenseChart } from "@/components/income-expense_chart";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import RecentTransactionWidget from "@/components/dashboard/recent-transaction-widget";
 import RecentTransferWidget from "@/components/dashboard/recent-transfer-widget";

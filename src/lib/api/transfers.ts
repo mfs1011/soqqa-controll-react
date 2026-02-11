@@ -1,5 +1,5 @@
 import { buildQuery } from "./build-query"
-import { apiFetch } from "./client"
+import apiClient from "./client"
 import type { PaginatedResponse } from "@/types/api/paginated-response"
 import type { Transfer, TransfersQueryParams } from "@/types/transfers"
 
@@ -15,8 +15,6 @@ export function getTransfers(
     })
 
 
-    return apiFetch(
-        `/transactions/transfers?${query}`
-    )
+    return apiClient.get(`/transactions/transfers?${query}`)
 }
 

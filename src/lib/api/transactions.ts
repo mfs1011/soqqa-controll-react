@@ -1,6 +1,6 @@
 import type { Transaction, TransactionsQueryParams } from "@/types/transactions"
 import { buildQuery } from "./build-query"
-import { apiFetch } from "./client"
+import apiClient from "./client"
 import type { PaginatedResponse } from "@/types/api/paginated-response"
 
 export function getTransactions(
@@ -15,8 +15,6 @@ export function getTransactions(
     })
 
 
-    return apiFetch(
-        `/transactions?${query}`
-    )
+    return apiClient.get(`/transactions?${query}`)
 }
 

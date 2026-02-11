@@ -22,10 +22,6 @@ export default function YearlyTotalsWidget() {
         return <div>No data available</div>
     }
 
-    // return (
-    //     <pre>{JSON.stringify(data, null, 2)}</pre>
-    // )
-
     return (
         <IncomeExpenseChart data={data} year={page} onChangeYear={(year: any) => setSearchParams({ year: String(year) })} />
     )

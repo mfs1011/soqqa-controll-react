@@ -115,7 +115,7 @@ export function IncomeExpenseChart({ data, year, onChangeYear }: any) {
                                     formatter={(value) => [formatNumber(Number(value)), "Amount"]}
                                     labelFormatter={(label) => `Month: ${MOTH_NAMES[label - 1]}`}
                                 />
-                                <Legend verticalAlign="top" height={36} iconType="circle" />
+                                <Legend verticalAlign="top" height={36} iconType="line" />
                                 <Line
                                     name="Income"
                                     type="monotone"
@@ -155,7 +155,7 @@ export function IncomeExpenseChart({ data, year, onChangeYear }: any) {
                                     formatter={(value) => [formatNumber(Number(value)), "Amount"]}
                                     labelFormatter={(label) => `Month: ${MOTH_NAMES[label - 1]}`}
                                 />
-                                <Legend verticalAlign="top" height={36} iconType="circle" />
+                                <Legend verticalAlign="top" height={36} iconType="square" />
                                 <Bar
                                     name="Income"
                                     dataKey="totalIncome"
