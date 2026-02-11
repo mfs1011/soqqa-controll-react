@@ -22,10 +22,7 @@ import { formatNumber } from "@/lib/formatters"
 export function IncomeExpenseChart({ data, year, onChangeYear }: any) {
     const [chartType, setChartType] = useState<"line" | "bar">("line")
 
-    const MOTH_NAMES = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
+    const MOTH_NAMES = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
     // Yillar ro'yxati (Buni props orqali ham berish mumkin)
     const yearOptions = Array.from({ length: 2026 - 2010 + 1 }, (_, i) => 2010 + i);

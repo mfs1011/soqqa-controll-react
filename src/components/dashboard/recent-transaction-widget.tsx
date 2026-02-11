@@ -3,7 +3,7 @@ import { RecentIncomExpenseTable, type TableIncomeExpenseHeaders } from "../tabl
 import { useSearchParams } from "react-router-dom"
 import { TablePagination } from "../tables/table-pagination"
 
-export default function RecentTransactionWidget() {
+export default function RecentTransactionWidget({ pagination = false }: { pagination?: boolean }) {
     const [searchParams, setSearchParams] = useSearchParams()
     const page = Number(searchParams.get("transactions_page") ?? "1")
     const limit = Number(searchParams.get("transactions_limit") ?? "10")
@@ -40,7 +40,7 @@ export default function RecentTransactionWidget() {
                 headers={incomeExpenseHeaders}
             />
 
-            {meta && (
+            {pagination && meta && (
                 <TablePagination
                     meta={meta}
                     limit={limit}

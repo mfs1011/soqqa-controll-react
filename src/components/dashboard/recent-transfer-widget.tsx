@@ -3,7 +3,7 @@ import { useSearchParams } from "react-router-dom"
 import { TablePagination } from "../tables/table-pagination"
 import { RecentTransferTable, type TableTransferHeaders } from "../tables/recent-transfers-table"
 
-export default function RecentTransferWidget() {
+export default function RecentTransferWidget({ pagination = false }: { pagination?: boolean }) {
     const [searchParams, setSearchParams] = useSearchParams()
     const page = Number(searchParams.get("transfers_page") ?? "1")
     const limit = Number(searchParams.get("transfers_limit") ?? "10")
@@ -42,7 +42,7 @@ export default function RecentTransferWidget() {
                 headers={transferHeaders}
             />
 
-            {meta && (
+            {pagination && meta && (
                 <TablePagination
                     meta={meta}
                     limit={limit}
