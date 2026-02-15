@@ -42,6 +42,22 @@ apiClient.interceptors.response.use(
     (response) => response.data,
     async (error: AxiosError) => {
         const originalRequest: any = error.config;
+        
+        // Token noto'g'ri bo'lsa (403 Forbidden)
+        // Backenddan kelayotgan "Token invalid" xabarini ham tekshiramiz
+        const errorData: any = error.response?.data;
+        
+        if (
+            error.response?.status === 403 || 
+            (errorData?.status === "error" && errorData?.message === "Token invalid")
+        ) {
+            console.warn("Xavfsizlik xatosi: Token yaroqsiz.");
+            clearTokens();
+            if (typeof window !== 'undefined') {
+                window.location.href = '/login';
+            }
+            return Promise.reject(error);
+        }
 
         // Agar xato 401 bo'lsa va bu so'rov hali qayta urinilmagan bo'lsa
         if (error.response?.status === 401 && !originalRequest._retry) {

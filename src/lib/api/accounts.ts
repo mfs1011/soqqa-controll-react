@@ -14,10 +14,14 @@ export function getAccounts(
     return apiClient.get(`/accounts?${query}`)
 }
 
-export function deleteAccount(id: number): Promise<void> {
+export function deleteAccount(id: number): Promise<{ account_id: number }> {
     return apiClient.delete(`/accounts/${id}`)
 }
 
-export function updateAccount(id: string, data: Omit<Account, "name">): Promise<Account> {
-    return apiClient.patch(`/accounts/${id}`, data)
+export function updateAccount(id: string, name: Pick<Account, "name">): Promise<Account> {
+    return apiClient.patch(`/accounts/${id}`, name)
+}
+
+export function addAccount(data: Pick<Account, "name">): Promise<Account> {
+    return apiClient.post('/accounts', data)
 }

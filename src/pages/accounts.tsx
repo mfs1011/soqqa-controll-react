@@ -6,9 +6,11 @@ import { Input } from "@/components/ui/input";
 import { useAccounts } from "@/hooks/useAccounts";
 import { formatDate, formatNumber } from "@/lib/formatters";
 import type { Account } from "@/types/accounts";
-import { ArrowUpIcon, CheckIcon, EyeIcon, PencilIcon, SquarePlusIcon, TrashIcon, XIcon } from "lucide-react";
+import { ArrowUpIcon, CheckIcon, PencilIcon, SquarePlusIcon, TrashIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
+import { type SubmitEvent } from "react";
+import { toast } from "sonner";
 
 export default function Accounts() {
 	const [searchParams, setSearchParams] = useSearchParams()
@@ -17,8 +19,9 @@ export default function Accounts() {
 	const [editedAccountId, setEditedAccountId] = useState<number | null>(null)
 	const [editedAccountName, setEditedAccountName] = useState<string>("")
 	const [deletingAccountId, setDeletingAccountId] = useState<number | null>(null)
+	const [isOpenAddAccountModal, setIsOpenAddAccountModal] = useState<boolean>(false)
 
-	const { items, isLoading, error, deleteAccount, editAccount } = useAccounts({
+	const { items, isLoading, error, deleteAccount, editAccount, addAccount } = useAccounts({
 		page,
 		limit,
 	});
@@ -39,10 +42,19 @@ export default function Accounts() {
 	}
 
 	const onSave = () => {
-		// Bu yerda API chaqiruv bo'lishi kerak edi
+		editAccount(editedAccountId, editedAccountName)
 
 		setEditedAccountId(null)
 		setEditedAccountName("")
+	}
+
+	const onAddAccount = async (accountName: string) => {
+		await addAccount({ name: accountName })
+		setIsOpenAddAccountModal(false)
+	}
+
+	const openAddAccountModal = () => {
+		setIsOpenAddAccountModal(true);
 	}
 
 	if (isLoading)
@@ -58,12 +70,21 @@ export default function Accounts() {
 					Accounts
 				</h2>
 				<div>
-					<Button>
+					<Button onClick={openAddAccountModal}>
 						<SquarePlusIcon />
 						Add Account
 					</Button>
 				</div>
 			</div>
+
+			<AddAccountModal
+				isOpen={isOpenAddAccountModal}
+				setIsOpen={(open) => {
+					if (!open) setIsOpenAddAccountModal(false)
+				}}
+				onSubmit={onAddAccount}
+			/>
+
 			{items.length === 0 ? (
 				<div className="text-center text-gray-500 py-10">
 					No accounts found.
@@ -159,6 +180,38 @@ function DialogModal({ isOpen, setIsOpen, onAccept }: { isOpen: boolean; setIsOp
 						<Button variant="default" onClick={onAccept}>Accept</Button>
 					</DialogClose>
 				</DialogFooter>
+			</DialogContent>
+		</Dialog>
+	)
+}
+
+function AddAccountModal({ isOpen, setIsOpen, onSubmit }: { isOpen: boolean; setIsOpen: (open: boolean) => void, onSubmit: (accountName: string) => void }) {
+	const [accountName, setAccountName] = useState<string>("")
+
+	const onAdd = async(e: SubmitEvent<HTMLFormElement>) => {
+		e.preventDefault()
+		onSubmit(accountName)
+	}
+
+	return (
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+			<DialogContent>
+				<form onSubmit={onAdd} className="flex flex-col gap-4">
+					<DialogHeader>
+						<DialogTitle>Add Account</DialogTitle>
+					</DialogHeader>
+						
+					<div>
+						<Input placeholder="Account Name Example: Naqd, Karta ..." value={accountName} onChange={({ target }) => setAccountName(target.value)} />
+					</div>
+
+					<DialogFooter>
+						<DialogClose asChild>
+							<Button variant="outline">Close</Button>
+						</DialogClose>
+						<Button type="submit" variant="default">Add</Button>
+					</DialogFooter>
+				</form>
 			</DialogContent>
 		</Dialog>
 	)

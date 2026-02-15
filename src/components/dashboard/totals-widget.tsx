@@ -33,7 +33,7 @@ export default function TotalsWidget() {
                 <CardContent>
                     <div className="flex flex-col gap-3">
                         <h3 className="text-lg font-semibold">Total Income</h3>
-                        <p className="text-3xl font-semibold text-green-700">
+                        <p className={`text-3xl font-semibold ${data.totalIncome ? 'text-green-700' : ''}`}>
                             {formatNumber(data.totalIncome)}
                         </p>
                     </div>
@@ -43,7 +43,7 @@ export default function TotalsWidget() {
                 <CardContent>
                     <div className="flex flex-col gap-3">
                         <h3 className="text-lg font-semibold">Total Expense</h3>
-                        <p className="text-3xl font-semibold text-red-700 ">
+                        <p className={`text-3xl font-semibold ${data.totalExpense ? 'text-red-700' : ''} `}>
                             {formatNumber(data.totalExpense)}
                         </p>
                     </div>
