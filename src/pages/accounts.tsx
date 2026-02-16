@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { useAccounts } from "@/hooks/useAccounts";
 import { formatDate, formatNumber } from "@/lib/formatters";
 import type { Account } from "@/types/accounts";
-import { ArrowUpIcon, CheckIcon, PencilIcon, SquarePlusIcon, TrashIcon, XIcon } from "lucide-react";
+import { CheckIcon, PencilIcon, SquarePlusIcon, TrashIcon, XIcon } from "lucide-react";
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { type SubmitEvent } from "react";

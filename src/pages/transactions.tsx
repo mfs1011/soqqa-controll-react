@@ -15,13 +15,15 @@ import { TransactionType } from "@/enums/TransactionType"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { useTransactions } from "@/hooks/useTransactions"
+import { useTransfers } from "@/hooks/useTransfers"
 
 export default function Transactions() {
     const [searchParams, setSearchParams] = useSearchParams()
     const activeTab = searchParams.get("tab") ?? "income-expense"
 
     const isOpen = useTransactionAddModal((state) => state.isOpen)
-    const { addTransaction, addTransfer } = useTransactions({ page: 1, limit: 10 })
+    const { addTransaction } = useTransactions({ page: 1, limit: 10 })
+    const { addTransfer } = useTransfers({ page: 1, limit: 10 })
 
     return (
         <div className="flex flex-col gap-4">
