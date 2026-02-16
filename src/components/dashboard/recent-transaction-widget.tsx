@@ -12,7 +12,7 @@ export default function RecentTransactionWidget({ pagination = false }: { pagina
         page: page,
         limit: limit,
         sort: "id",
-        direction: "ASC",
+        direction: "DESC",
     })
 
     const incomeExpenseHeaders: TableIncomeExpenseHeaders = {

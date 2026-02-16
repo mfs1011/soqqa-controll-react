@@ -10,7 +10,6 @@ import { ArrowUpIcon, CheckIcon, PencilIcon, SquarePlusIcon, TrashIcon, XIcon } 
 import { useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { type SubmitEvent } from "react";
-import { toast } from "sonner";
 
 export default function Accounts() {
 	const [searchParams, setSearchParams] = useSearchParams()
@@ -41,8 +40,9 @@ export default function Accounts() {
 		setEditedAccountName("")
 	}
 
-	const onSave = () => {
-		editAccount(editedAccountId, editedAccountName)
+	const onSave = async () => {
+		// TODO: API ga so'rov yuborish va accountni yangilash
+		await editAccount({ id: editedAccountId!, data: { name: editedAccountName } })
 
 		setEditedAccountId(null)
 		setEditedAccountName("")
@@ -142,12 +142,9 @@ export default function Accounts() {
 											]}
 											/>
 										</div>
-										<p className="text-3xl font-semibold">
-											{formatNumber(account.balance)}
-										</p>
-										<div className="mt-2 flex items-center justify-between">
-											<p className="text-green-600 text-sm flex items-center">24% <ArrowUpIcon size={16} /></p>
-											<p className="text-gray-500 text-sm ml-auto">
+										<div className="flex flex-col gap-4">
+											<p className="text-3xl font-semibold">{formatNumber(account.balance)}</p>
+											<p className="text-gray-500 text-xs">
 												{formatDate(new Date(account.createdAt))}
 											</p>
 										</div>
@@ -188,7 +185,7 @@ function DialogModal({ isOpen, setIsOpen, onAccept }: { isOpen: boolean; setIsOp
 function AddAccountModal({ isOpen, setIsOpen, onSubmit }: { isOpen: boolean; setIsOpen: (open: boolean) => void, onSubmit: (accountName: string) => void }) {
 	const [accountName, setAccountName] = useState<string>("")
 
-	const onAdd = async(e: SubmitEvent<HTMLFormElement>) => {
+	const onAdd = async (e: SubmitEvent<HTMLFormElement>) => {
 		e.preventDefault()
 		onSubmit(accountName)
 	}
@@ -200,7 +197,7 @@ function AddAccountModal({ isOpen, setIsOpen, onSubmit }: { isOpen: boolean; set
 					<DialogHeader>
 						<DialogTitle>Add Account</DialogTitle>
 					</DialogHeader>
-						
+
 					<div>
 						<Input placeholder="Account Name Example: Naqd, Karta ..." value={accountName} onChange={({ target }) => setAccountName(target.value)} />
 					</div>

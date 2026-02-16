@@ -5,8 +5,11 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useTransactionAddModal } from "@/store/use-transaction-add-modal";
 
 export default function Header() {
+    const onOpen = useTransactionAddModal((state) => state.onOpen)
+
     return (
         <header className="h-14 bg-white dark:bg-card border-b flex items-center px-6">
             <h1 className="font-semibold">
@@ -16,7 +19,7 @@ export default function Header() {
             <div className="ml-auto flex items-center gap-4">
                 <Tooltip>
                     <TooltipTrigger asChild>
-                        <Button variant="default" size="sm" className="ml-4 flex items-center gap-2">
+                        <Button onClick={onOpen} variant="default" size="sm" className="ml-4 flex items-center gap-2">
                             <SquarePlusIcon />
                             Transaction / Transfer
                         </Button>

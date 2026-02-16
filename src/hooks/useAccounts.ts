@@ -1,5 +1,6 @@
 import { getAccounts, deleteAccount, updateAccount, addAccount } from "@/lib/api/accounts";
 import type { Account, AccountsQueryParams } from "@/types/accounts";
+import type { PaginatedResponse } from "@/types/api/paginated-response";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 
@@ -7,7 +8,7 @@ export const useAccounts = (params: AccountsQueryParams) => {
     const queryClient = useQueryClient();
 
     // 1. Data Fetching
-    const query = useQuery({
+    const query = useQuery<PaginatedResponse<Account>>({
         queryKey: ['accounts', params],
         queryFn: () => getAccounts(params),
     });
@@ -19,22 +20,42 @@ export const useAccounts = (params: AccountsQueryParams) => {
             // Ro'yxatni yangilash
             queryClient.invalidateQueries({ queryKey: ['accounts'] });
             toast.success("Account deleted successfully", {
-				description: `Account with ${JSON.stringify(account_id, null, 2)} added successfully`,
-				duration: 3000,
-				position: "top-right",
-				className: "bg-green-500 text-white",
-			})
+                description: `Account with ${JSON.stringify(account_id, null, 2)} added successfully`,
+                duration: 3000,
+                position: "top-right",
+                className: "bg-green-500 text-white",
+            })
         },
-        onError: () => alert("O'chirishda xatolik yuz berdi")
+        onError: (error: any) => {
+            toast.error("Failed to delete account", {
+                description: `Error: ${error.message}`,
+                duration: 3000,
+                position: "top-right",
+                className: "bg-red-500 text-white",
+            })
+        }
     });
 
     // 3. Edit Mutation
     const editMut = useMutation({
-        mutationFn: ({ id, name }: Pick<Account, 'id' | 'name'>) => updateAccount(id, name),
+        mutationFn: ({ id, data }: { id: number, data: Partial<Account> }) => updateAccount(id, data),
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['accounts'] });
+            toast.success("Account updated successfully", {
+                description: `Account updated successfully`,
+                duration: 3000,
+                position: "top-right",
+                className: "bg-green-500 text-white",
+            })
         },
-        onError: () => alert("Yangilashda xatolik yuz berdi")
+        onError: (error: any) => {
+            toast.error("Failed to update account", {
+                description: `Error: ${error.message}`,
+                duration: 3000,
+                position: "top-right",
+                className: "bg-red-500 text-white",
+            })
+        }
     });
 
     // 4. Add Mutation
@@ -43,19 +64,19 @@ export const useAccounts = (params: AccountsQueryParams) => {
         onSuccess: () => {
             queryClient.invalidateQueries({ queryKey: ['accounts'] });
             toast.success("Account added successfully", {
-				description: `Account added successfully`,
-				duration: 3000,
-				position: "top-right",
-				className: "bg-green-500 text-white",
-			})
+                description: `Account added successfully`,
+                duration: 3000,
+                position: "top-right",
+                className: "bg-green-500 text-white",
+            })
         },
         onError: (data: any) => {
             toast.error(`Failed to add account ${JSON.stringify(data.message, null, 2)}`, {
-				description: "Failed to add account",
-				duration: 3000,
-				position: "top-right",
-				className: "bg-red-500 text-white overflow-scroll",
-			})
+                description: "Failed to add account",
+                duration: 3000,
+                position: "top-right",
+                className: "bg-red-500 text-white overflow-scroll",
+            })
         },
     });
 

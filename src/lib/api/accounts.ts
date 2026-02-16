@@ -18,8 +18,8 @@ export function deleteAccount(id: number): Promise<{ account_id: number }> {
     return apiClient.delete(`/accounts/${id}`)
 }
 
-export function updateAccount(id: string, name: Pick<Account, "name">): Promise<Account> {
-    return apiClient.patch(`/accounts/${id}`, name)
+export function updateAccount(id: number, data: Partial<Account>): Promise<Account> {
+    return apiClient.patch(`/accounts/${id}`, data)
 }
 
 export function addAccount(data: Pick<Account, "name">): Promise<Account> {

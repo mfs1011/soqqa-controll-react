@@ -12,7 +12,7 @@ export default function RecentTransferWidget({ pagination = false }: { paginatio
         page: page,
         limit: limit,
         sort: "id",
-        direction: "ASC",
+        direction: "DESC",
     })
 
     const transferHeaders: TableTransferHeaders = {

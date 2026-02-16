@@ -30,14 +30,7 @@ export default function Sidebar() {
                         isActive ? "text-blue-600" : ""
                     }
                 >
-                    Transactions</NavLink>
-                <NavLink
-                    to="/transfers"
-                    className={({ isActive }) =>
-                        isActive ? "text-blue-600" : ""
-                    }
-                >
-                    Transfers
+                    Transactions
                 </NavLink>
             </nav>
         </aside>
